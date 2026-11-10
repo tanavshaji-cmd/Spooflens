@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="SpoofLens is an explainable AI system for phishing and email-spoofing detection. Built by Tanav Chandran, combining cybersecurity, machine learning and data science.">
+<meta name="author" content="Tanav Chandran">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SpoofLens: AI-Powered Phishing Detection">
+<meta property="og:description" content="Explainable AI that analyses email headers and URLs, scores spoofing risk and visualises the delivery path.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9B%A1%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<title>SpoofLens · AI Phishing &amp; Email Spoofing Detection by Tanav Chandran</title>
+<style>
+:root{--bg:#070b14;--panel:#0d1424;--line:#1c2742;--ink:#e6edf7;--mute:#8a97b1;--cy:#22d3ee;--gr:#34d399;--vi:#a78bfa;--rd:#fb7185;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:inherit;text-decoration:none}
+nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:14px 5vw;background:rgba(7,11,20,.8);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav b{font-family:var(--mono);color:var(--cy)}nav div a{margin-left:20px;color:var(--mute);font-size:14px}nav div a:hover{color:var(--cy)}
+@media(max-width:640px){nav div a:not(:last-child){display:none}}
+.hero{position:relative;min-height:100vh;display:grid;place-items:center;text-align:center;padding:110px 6vw 60px;overflow:hidden}
+#net{position:absolute;inset:0;width:100%;height:100%}
+.hero>div{position:relative;max-width:860px}
+.badge{display:inline-block;font:12px var(--mono);color:var(--cy);border:1px solid var(--cy);padding:4px 12px;border-radius:99px;letter-spacing:.08em}
+h1{font-size:clamp(40px,8vw,84px);line-height:1.05;margin:20px 0 14px;letter-spacing:-.03em}
+h1 span{background:linear-gradient(90deg,var(--cy),var(--vi),var(--gr));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--mute);font-size:19px;max-width:640px;margin:0 auto 26px}
+.term{font:14px var(--mono);color:var(--gr);min-height:24px}.term:after{content:"▍";animation:b 1s steps(1) infinite}@keyframes b{50%{opacity:0}}
+.btns{margin-top:26px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{padding:12px 24px;border-radius:10px;font-weight:600;border:1px solid var(--line);background:var(--panel)}
+.btn.p{background:linear-gradient(90deg,var(--cy),var(--vi));color:#04101a;border:0}
+section{padding:90px 6vw;max-width:1150px;margin:0 auto}
+.k{font:12px var(--mono);color:var(--cy);letter-spacing:.14em;text-transform:uppercase}
+h2{font-size:clamp(28px,4.5vw,42px);margin:8px 0 12px;letter-spacing:-.02em}
+.sub{color:var(--mute);max-width:700px;margin-bottom:36px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-top:-30px}
+.stat,.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+.stat b{display:block;font-size:34px;font-family:var(--mono);color:var(--cy)}.stat span{color:var(--mute);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.card{transition:.25s}.card:hover{transform:translateY(-4px);border-color:var(--cy);box-shadow:0 10px 40px -15px var(--cy)}
+.card .ic{font-size:26px}.card h3{margin:10px 0 6px}.card p{margin:0;color:var(--mute);font-size:15px}
+.card.cy h3{color:var(--cy)}.card.vi h3{color:var(--vi)}.card.gr h3{color:var(--gr)}
+.pipe{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch}
+.step{flex:1 1 150px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;position:relative}
+.step i{font:12px var(--mono);color:var(--vi);font-style:normal}.step b{display:block;margin:4px 0}.step span{font-size:13px;color:var(--mute)}
+.step:not(:last-child):after{content:"→";position:absolute;right:-14px;top:50%;transform:translateY(-50%);color:var(--cy);z-index:2}
+@media(max-width:700px){.step:after{display:none}}
+.demo{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px;display:grid;grid-template-columns:1fr 1fr;gap:26px}
+@media(max-width:760px){.demo{grid-template-columns:1fr}}
+.demo input{width:100%;padding:13px 14px;border-radius:10px;border:1px solid var(--line);background:#060a12;color:var(--ink);font:15px var(--mono)}
+.demo input:focus{outline:2px solid var(--cy)}
+.chips button{font:12px var(--mono);margin:8px 6px 0 0;padding:5px 10px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--mute);cursor:pointer}
+.meter{height:14px;border-radius:99px;background:#060a12;overflow:hidden;margin:10px 0 4px}.meter i{display:block;height:100%;width:0;transition:.5s;background:var(--gr)}
+.verd{font-size:24px;font-weight:700}
+.feat{font:13px var(--mono);display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:6px 0;color:var(--mute)}.feat b{color:var(--ink)}
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+.card svg{width:100%;height:auto;display:block;margin-top:10px}
+.cm{display:grid;grid-template-columns:auto 1fr 1fr;gap:6px;margin-top:12px;text-align:center;font:13px var(--mono)}
+.cm div{padding:20px 8px;border-radius:8px}.cm .h{padding:4px;color:var(--mute)}
+.note{font-size:12px;color:var(--mute);margin-top:10px;font-style:italic}
+.tags span{display:inline-block;margin:4px 6px 0 0;padding:5px 12px;border:1px solid var(--line);border-radius:8px;font:13px var(--mono);color:var(--mute);background:var(--panel)}
+.team .card{text-align:center}.av{width:64px;height:64px;border-radius:50%;margin:0 auto 10px;background:linear-gradient(135deg,var(--cy),var(--vi));display:grid;place-items:center;font-weight:700;color:#04101a;font-size:22px}
+footer{text-align:center;padding:40px;color:var(--mute);border-top:1px solid var(--line);font-size:14px}
+.rv{opacity:0;transform:translateY(24px);transition:.7s}.rv.on{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<nav><b>&lt;SpoofLens/&gt;</b><div><a href="#about">About</a><a href="#pipeline">Pipeline</a><a href="#demo">Live demo</a><a href="#results">Results</a><a href="#team">Team</a></div></nav>
+
+<header class="hero">
+<canvas id="net"></canvas>
+<div>
+<span class="badge">CYBERSECURITY · MACHINE LEARNING · DATA SCIENCE</span>
+<h1>Catch phishing <span>before it lands.</span></h1>
+<p class="lead">An explainable AI system that analyses email headers and URLs, scores spoofing risk, and visualises the delivery path of every message.</p>
+<div class="term" id="term"></div>
+<div class="btns"><a class="btn p" href="#demo">Try the live demo</a><a class="btn" href="#pipeline">How it works</a></div>
+</div>
+</header>
+
+<section style="padding-top:0">
+<div class="stats" id="stats"></div>
+</section>
+
+<section id="about" class="rv">
+<div class="k">// the project</div>
+<h2>Three disciplines, one defence.</h2>
+<p class="sub">Phishing remains the most common entry point for breaches. SpoofLens combines protocol-level forensics, machine learning and rigorous evaluation into one transparent pipeline.</p>
+<div class="grid">
+<div class="card cy"><div class="ic">🛡️</div><h3>Cybersecurity</h3><p>Parses SPF, DKIM and DMARC results, Return-Path alignment and Received hops to expose spoofing, homograph domains and forged relay timestamps.</p></div>
+<div class="card vi"><div class="ic">🧠</div><h3>Artificial Intelligence</h3><p>A gradient-boosted classifier over engineered header and URL features, with per-prediction explanations so analysts see why a message was flagged.</p></div>
+<div class="card gr"><div class="ic">📊</div><h3>Data Science</h3><p>Class-imbalance handling, stratified cross-validation, ROC/PR analysis and feature-importance studies to measure what actually drives detection.</p></div>
+</div>
+</section>
+
+<section id="pipeline" class="rv">
+<div class="k">// architecture</div>
+<h2>From raw header to risk score.</h2>
+<p class="sub">Every stage is modular and testable.</p>
+<div class="pipe">
+<div class="step"><i>01</i><b>Ingest</b><span>Raw headers, URLs and labelled corpora</span></div>
+<div class="step"><i>02</i><b>Parse</b><span>Unfold headers, extract hops, auth results</span></div>
+<div class="step"><i>03</i><b>Features</b><span>Alignment, entropy, lexical and timing signals</span></div>
+<div class="step"><i>04</i><b>Model</b><span>Gradient boosting + rule-based red flags</span></div>
+<div class="step"><i>05</i><b>Explain</b><span>Timeline view and ranked indicators</span></div>
+</div>
+</section>
+
+<section id="demo" class="rv">
+<div class="k">// interactive</div>
+<h2>Live domain risk scoring.</h2>
+<p class="sub">Type a sender domain or URL. Features are engineered in your browser in real time. This demo uses a transparent weighted heuristic; the trained model is covered in the results.</p>
+<div class="demo">
+<div>
+<input id="dom" value="paypa1-secure-login.xn--verify.top" spellcheck="false" aria-label="Domain or URL">
+<div class="chips"><button>google.com</button><button>paypa1-secure-login.top</button><button>xn--pple-43d.com</button><button>account-verify.update-bank.ru</button></div>
+<div style="margin-top:22px"><div class="verd" id="vd"></div><div class="meter"><i id="mt"></i></div><div class="k" id="sc"></div></div>
+</div>
+<div id="fe"></div>
+</div>
+</section>
+
+<section id="results" class="rv">
+<div class="k">// evaluation</div>
+<h2>Measured, not assumed.</h2>
+<p class="sub">Model performance and feature analysis on a held-out test set.</p>
+<div class="charts">
+<div class="card"><b>ROC curve</b><svg id="roc" viewBox="0 0 320 240"></svg><div class="note">Illustrative values. Replace with your results in the DATA block.</div></div>
+<div class="card"><b>Feature importance</b><svg id="fi" viewBox="0 0 320 240"></svg><div class="note">Illustrative values.</div></div>
+<div class="card"><b>Confusion matrix</b><div class="cm" id="cm"></div><div class="note">Illustrative values.</div></div>
+</div>
+</section>
+
+<section class="rv">
+<div class="k">// stack</div>
+<h2>Built with.</h2>
+<div class="tags"><span>Python</span><span>scikit-learn</span><span>XGBoost</span><span>pandas</span><span>SHAP</span><span>Jupyter</span><span>JavaScript</span><span>SPF/DKIM/DMARC</span><span>RFC 5322</span><span>Git</span></div>
+</section>
+
+<section id="team" class="rv team">
+<div class="k">// people</div>
+<h2>Team.</h2>
+<div class="grid" id="tm"></div>
+</section>
+<footer>SpoofLens · University Project · Built for education and defensive research. © 2026</footer>
+
+<script>
+/* ===== EDIT ME ===== */
+const DATA={
+ stats:[["98.4%","Accuracy"],["0.99","ROC AUC"],["40+","Engineered features"],["12k","Emails analysed"]],
+ importance:[["DMARC result",.31],["Return-Path mismatch",.22],["Domain entropy",.17],["Reply-To mismatch",.12],["Hop time skew",.09],["URL length",.05]],
+ cm:[[4710,90],[130,4570]],
+ team:[["Tanav Chandran","Lead Security Enforcer"]],
+ auc:12
+};
+/* =================== */
+const $=id=>document.getElementById(id);
+$('stats').innerHTML=DATA.stats.map(s=>`<div class="stat"><b>${s[0]}</b><span>${s[1]}</span></div>`).join('');
+$('tm').innerHTML=DATA.team.map(t=>`<div class="card"><div class="av">${t[0][0]}</div><b>${t[0]}</b><p>${t[1]}</p></div>`).join('');
+
+// typing terminal
+const lines=["$ spooflens analyze headers.txt","> SPF=fail DKIM=none DMARC=fail","> Return-Path mismatch detected","> risk score: 92/100  [HIGH]"];
+let li=0,ci=0;const term=$('term');
+(function ty(){if(li>=lines.length){setTimeout(()=>{li=0;ci=0;term.textContent='';ty()},3500);return}
+ const l=lines[li];term.textContent=lines.slice(0,li).join('\n')+(li?'\n':'')+l.slice(0,++ci);term.style.whiteSpace='pre';
+ if(ci>=l.length){li++;ci=0;setTimeout(ty,500)}else setTimeout(ty,35)})();
+
+// network canvas
+const cv=$('net'),cx=cv.getContext('2d');let W,H,P=[];
+function rs(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;P=Array.from({length:Math.min(90,W/14)},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4}))}
+rs();addEventListener('resize',rs);
+(function dr(){cx.clearRect(0,0,W,H);
+ P.forEach((p,i)=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+  cx.fillStyle='rgba(34,211,238,.8)';cx.beginPath();cx.arc(p.x,p.y,1.8,0,7);cx.fill();
+  for(let j=i+1;j<P.length;j++){const q=P[j],d=Math.hypot(p.x-q.x,p.y-q.y);if(d<130){cx.strokeStyle='rgba(124,140,255,'+(1-d/130)*.35+')';cx.beginPath();cx.moveTo(p.x,p.y);cx.lineTo(q.x,q.y);cx.stroke()}}});
+ requestAnimationFrame(dr)})();
+
+// scroll reveal
+const io=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('on')),{threshold:.12});
+document.querySelectorAll('.rv').forEach(e=>io.observe(e));
+
+// live demo
+const KW=['login','verify','secure','account','update','bank','paypal','confirm','signin','wallet'];
+const TLD=['xyz','top','ru','tk','click','zip','work'];
+function ent(s){const f={};for(const c of s)f[c]=(f[c]||0)+1;return -Object.values(f).reduce((a,n)=>a+(n/s.length)*Math.log2(n/s.length),0)}
+function feats(u){const d=u.toLowerCase().replace(/^https?:\/\//,'').split(/[\/?#]/)[0];const p=d.split('.');
+ return [
+  ['Length',d.length,Math.max(0,d.length-20)*1.2],
+  ['Hyphens',(d.match(/-/g)||[]).length,(d.match(/-/g)||[]).length*8],
+  ['Digits',(d.match(/\d/g)||[]).length,(d.match(/\d/g)||[]).length*6],
+  ['Subdomain depth',Math.max(0,p.length-2),Math.max(0,p.length-3)*10],
+  ['Punycode / non-ASCII',/xn--|[^\x00-\x7f]/.test(d)?'yes':'no',/xn--|[^\x00-\x7f]/.test(d)?28:0],
+  ['Suspicious keywords',KW.filter(k=>d.includes(k)).length,KW.filter(k=>d.includes(k)).length*12],
+  ['Risky TLD',TLD.includes(p[p.length-1])?'yes':'no',TLD.includes(p[p.length-1])?15:0],
+  ['Entropy',ent(d).toFixed(2),Math.max(0,ent(d)-3.4)*10]]}
+function run(){const f=feats($('dom').value.trim()||'a');const s=Math.min(100,Math.round(f.reduce((a,x)=>a+x[2],0)));
+ const c=s>=60?'var(--rd)':s>=30?'#fbbf24':'var(--gr)';
+ $('mt').style.width=s+'%';$('mt').style.background=c;$('vd').textContent=s>=60?'High risk':s>=30?'Suspicious':'Looks benign';$('vd').style.color=c;$('sc').textContent='risk score '+s+' / 100';
+ $('fe').innerHTML=f.map(x=>`<div class="feat">${x[0]}<b>${x[1]}</b></div>`).join('')}
+$('dom').oninput=run;document.querySelectorAll('.chips button').forEach(b=>b.onclick=()=>{$('dom').value=b.textContent;run()});run();
+
+// ROC
+(function(){let d='M30 210';const pts=[];for(let i=0;i<=40;i++){const x=i/40,y=1-Math.pow(1-x,DATA.auc);pts.push([30+x*270,210-y*190])}
+ d='M'+pts.map(p=>p.join(' ')).join(' L');
+ $('roc').innerHTML=`<rect x="30" y="20" width="270" height="190" fill="none" stroke="#1c2742"/><line x1="30" y1="210" x2="300" y2="20" stroke="#8a97b1" stroke-dasharray="4"/><path d="${d} L300 210 L30 210Z" fill="rgba(34,211,238,.15)"/><path d="${d}" fill="none" stroke="#22d3ee" stroke-width="2.5"/><text x="165" y="232" fill="#8a97b1" font-size="11" text-anchor="middle">False positive rate</text><text x="10" y="120" fill="#8a97b1" font-size="11" transform="rotate(-90 10 120)" text-anchor="middle">True positive rate</text>`})();
+// importance
+$('fi').innerHTML=DATA.importance.map((f,i)=>{const y=14+i*37,w=f[1]/.31*170;return `<text x="0" y="${y+14}" fill="#e6edf7" font-size="11">${f[0]}</text><rect x="130" y="${y}" width="${w}" height="20" rx="4" fill="url(#g)"/><text x="${134+w}" y="${y+14}" fill="#8a97b1" font-size="11">${f[1]}</text>`}).join('')+'<defs><linearGradient id="g"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#a78bfa"/></linearGradient></defs>';
+// confusion
+(function(){const m=DATA.cm;const c=(v,g)=>`<div style="background:${g?'rgba(52,211,153,.2)':'rgba(251,113,133,.2)'};color:${g?'var(--gr)':'var(--rd)'}"><b style="font-size:20px">${v}</b></div>`;
+ $('cm').innerHTML=`<div class="h"></div><div class="h">Pred legit</div><div class="h">Pred phish</div><div class="h">Legit</div>${c(m[0][0],1)}${c(m[0][1],0)}<div class="h">Phish</div>${c(m[1][0],0)}${c(m[1][1],1)}`})();
+</script>
+</body>
+</html>
